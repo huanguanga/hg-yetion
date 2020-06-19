@@ -9,50 +9,18 @@
     <div class="contentContainer">
 			<div class="Nav">
 				<div class="scollNav">
-					<span class="text active">618专区</span>
-					<span class="text">618专区</span>
-					<span class="text">618专区</span>
-					<span class="text">618专区</span>
-					<span class="text">618专区</span>
-					<span class="text">618专区</span>
-					<span class="text">618专区</span>
-					<span class="text">618专区</span>
+					<span class="text" :class="{active:navId === item.id}" v-for="(item) in NavListData" :key="item.id" @click="changeNavId(item.id)">{{item.name}}</span>
 				</div>
 			</div>
 			<div class="content">
-				<div class="scollContent">
-          <img class="cateImg" src="https://yanxuan.nosdn.127.net/e34ad71ea15d28af6710055dabb33dbf.jpg?quality=75&type=webp&imageView&thumbnail=0x196" alt="">
+				<div class="scollContent" v-if="navListObj">
+          <img class="cateImg" :src="navListObj.imgUrl" alt="">
 					<div class="proList">
-						<div class='proItem'>
-              <img class="img" src="https://yanxuan.nosdn.127.net/ddf44708f576246755479a7261932b3b.png?quality=75&type=webp&imageView&thumbnail=144x144" alt="">
-							<span class="text">人气好物</span>
+						<div class='proItem' v-for="(item) in navListObj.subCateList" :key="item.id">
+              <img class="img" :src="item.wapBannerUrl" alt="">
+							<span class="text">{{item.name}}</span>
 						</div>
-            <div class='proItem'>
-              <img class="img" src="https://yanxuan.nosdn.127.net/ddf44708f576246755479a7261932b3b.png?quality=75&type=webp&imageView&thumbnail=144x144" alt="">
-							<span class="text">人气好物</span>
-						</div>
-            <div class='proItem'>
-              <img class="img" src="https://yanxuan.nosdn.127.net/ddf44708f576246755479a7261932b3b.png?quality=75&type=webp&imageView&thumbnail=144x144" alt="">
-							<span class="text">人气好物</span>
-						</div>
-            <div class='proItem'>
-              <img class="img" src="https://yanxuan.nosdn.127.net/ddf44708f576246755479a7261932b3b.png?quality=75&type=webp&imageView&thumbnail=144x144" alt="">
-							<span class="text">人气好物</span>
-						</div>
-            <div class='proItem'>
-              <img class="img" src="https://yanxuan.nosdn.127.net/ddf44708f576246755479a7261932b3b.png?quality=75&type=webp&imageView&thumbnail=144x144" alt="">
-							<span class="text">人气好物</span>
-						</div>
-            <div class='proItem'>
-              <img class="img" src="https://yanxuan.nosdn.127.net/ddf44708f576246755479a7261932b3b.png?quality=75&type=webp&imageView&thumbnail=144x144" alt="">
-							<span class="text">人气好物</span>
-						</div>
-            <div class='proItem'>
-              <img class="img" src="https://yanxuan.nosdn.127.net/ddf44708f576246755479a7261932b3b.png?quality=75&type=webp&imageView&thumbnail=144x144" alt="">
-							<span class="text">人气好物</span>
-						</div>
-					</div>
-					
+					</div>			
 				</div>
 			</div>
 		</div>
@@ -60,14 +28,34 @@
 </template>
 
 <script>
+import {reqNavListData} from "@/api"
 export default {
-  name:"",
+  name:"Classify",
   components: {},
   props: {},
   data() {
     return {
-
+      NavListData:[],
+      navId:0
     };
+  },
+  mounted() {
+    this.getNavListData()
+  },
+  methods: {
+    async getNavListData(){
+      const result = await reqNavListData()
+      this.NavListData = result
+      this.navId = result[0].id
+    },
+    changeNavId(navId){
+      this.navId = navId
+    }
+  },
+  computed: {
+    navListObj(){
+      return this.NavListData.find(item=>item.id === this.navId)
+    }
   },
 };
 </script>
@@ -75,7 +63,7 @@ export default {
 <style lang="stylus" scoped>
   .categoryContainer
     background #fff
-    height calc(100% - 97px)
+    height 100%
     .searchHeader
       height 75px
       .search

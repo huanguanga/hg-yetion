@@ -3,6 +3,7 @@ import Cart from "@/pages/Cart"
 import Classify from "@/pages/Classify"
 import Home from "@/pages/Home"
 import Personal from "@/pages/Personal"
+import Search from "@/pages/Search"
 
 export default [
   {
@@ -29,5 +30,9 @@ export default [
   {
     path:'/personal',
     component:Personal
+  },
+  {
+    path:'/search',
+    component:Search
   }
 ]

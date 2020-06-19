@@ -21,5 +21,25 @@ module.exports = {
       .set('@', resolve('src'))
       .set('@assets',resolve('src/assets'))
       // 这里只写了两个个，你可以自己再加，按这种格式.set('', resolve(''))
+	},
+	devServer: {
+    proxy: {
+        '/api': {     //这里最好有一个 /
+            target: 'http://localhost:3001',  // 后台接口域名
+            ws: true,        //如果要代理 websockets，配置这个参数
+						changeOrigin: true,  //是否跨域
+						pathRewrite:{
+							'^/api':''
+						}
+				},
+				'/abc':{
+						target: 'https://m.you.163.com',  // 后台接口域名
+            ws: true,        //如果要代理 websockets，配置这个参数
+						changeOrigin: true,  //是否跨域
+						pathRewrite:{
+							'^/abc':''
+						}
+				}
+    }
   }
 }
