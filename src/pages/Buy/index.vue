@@ -1,14 +1,8 @@
 <template>
   <div class="buyContainer">
-    <div class="top">
-      <div class="head">
-        <i class="iconfont icon-home"></i>
-        <div class="title">值得买</div>
-        <i class="iconfont icon-search"></i>
-        <i class="iconfont icon-cart-Empty cart"></i>
-      </div>
-      
-    </div>
+
+    <Header title='值得买'/> 
+
     <scroller  :on-infinite="infinite">
       <div class="navWrap">
         <div class="bg">
@@ -53,14 +47,15 @@
 
 <script>
 import axios from "axios"
-
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import "swiper/css/swiper.css"
+import Header from '@/components/Header'
 export default {
   name:"Buy",
   components: {
       Swiper,
-      SwiperSlide
+      SwiperSlide,
+      Header
     },
   data() {
     return {
@@ -127,26 +122,6 @@ export default {
 <style lang="stylus" scoped>
   .buyContainer
     height 100%
-    .top
-      height 100px
-      width 100%
-      .head
-        position fixed
-        display flex
-        width 100%
-        height 100px
-        line-height 100px
-        justify-content space-around
-        background #ffffff
-        z-index 10
-        i 
-          font-size 60px
-        .title
-          flex 1
-          text-align center
-          font-size 40px
-        .cart
-          margin-left 30px
     .navWrap
       height 760px
       position relative

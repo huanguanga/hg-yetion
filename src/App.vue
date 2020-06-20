@@ -1,7 +1,7 @@
 <template>
   <div id="root">
       <router-view></router-view>
-    <TabBar v-if="this.$router.history.current.fullPath !== '/search'"/> 
+    <TabBar v-if="this.$router.history.current.fullPath !== '/search' && this.$router.history.current.fullPath.indexOf('/login') === -1"/> 
   </div>
 </template>
 

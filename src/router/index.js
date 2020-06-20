@@ -8,4 +8,16 @@ const router = new VueRouter({
   linkActiveClass:'active',
   routes
 })
+router.beforeEach((to, from, next)=>{
+  const userInfo = localStorage.getItem('userInfo')
+  if(to.path==='/personal'){
+    if(userInfo){
+      next()
+    }else{
+      next('/login')
+    }
+  }else{
+    next()
+  }
+})
 export default router

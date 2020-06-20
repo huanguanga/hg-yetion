@@ -1,19 +1,19 @@
 <template>
   <div class="categoryContainer">
     <div class="searchHeader">
-      <div class="search">
+      <div class="search" @click="toSearch">
         <i class="iconfont icon-search"></i>
 				<span>搜索商品</span>
 			</div>
     </div>
     <div class="contentContainer">
-			<div class="Nav">
-				<div class="scollNav">
+			<div class="Nav wrapper" ref="wrapper">
+				<div class="scollNav content">
 					<span class="text" :class="{active:navId === item.id}" v-for="(item) in NavListData" :key="item.id" @click="changeNavId(item.id)">{{item.name}}</span>
 				</div>
 			</div>
-			<div class="content">
-				<div class="scollContent" v-if="navListObj">
+			<div class="contentR  wrapper" ref="wrapper1">
+				<div class="scollContent content"  v-if="navListObj">
           <img class="cateImg" :src="navListObj.imgUrl" alt="">
 					<div class="proList">
 						<div class='proItem' v-for="(item) in navListObj.subCateList" :key="item.id">
@@ -29,9 +29,9 @@
 
 <script>
 import {reqNavListData} from "@/api"
+import Bscroll from "better-scroll"
 export default {
   name:"Classify",
-  components: {},
   props: {},
   data() {
     return {
@@ -39,7 +39,7 @@ export default {
       navId:0
     };
   },
-  mounted() {
+  created() {
     this.getNavListData()
   },
   methods: {
@@ -47,13 +47,22 @@ export default {
       const result = await reqNavListData()
       this.NavListData = result
       this.navId = result[0].id
+      this.$nextTick(() => {
+        this.scroll = new Bscroll(this.$refs.wrapper, {})
+      })
     },
     changeNavId(navId){
       this.navId = navId
+    },
+    toSearch(){
+      this.$router.push({path:'/search'})
     }
   },
   computed: {
     navListObj(){
+      this.$nextTick(() => {
+        this.scroll = new Bscroll(this.$refs.wrapper1, {})
+      })
       return this.NavListData.find(item=>item.id === this.navId)
     }
   },
@@ -66,6 +75,9 @@ export default {
     height 100%
     .searchHeader
       height 75px
+      position relative
+      z-index 10
+      background #fff
       .search
         font-size 28px
         width 690px
@@ -78,10 +90,11 @@ export default {
         i 
           font-size 28px
     .contentContainer
-      height calc(100% - 76px -97px)
+      height 100vh
       display flex
       box-sizing border-box
       border-top 2px solid #eee
+      padding-bottom 250px
       .Nav
         width 162px
         font-size 26px
@@ -107,14 +120,13 @@ export default {
                 position absolute
                 top:-15%
                 left 0
-      .content
+      .contentR
         width 528px
         padding 30px 30px 21px 
         height 100%
         .scollContent
           display flex
           flex-direction column
-          height 100%
           .cateImg
             width 520px
             height 19upx

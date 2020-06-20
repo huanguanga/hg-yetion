@@ -1,16 +1,16 @@
 <template>
   <div class="indexContainer">
     <!-- 头部 -->
-    <div class="header-wrap" @click="toSearch">
+    <div class="header-wrap">
       <div class="header">
         <a href="/" class="logo">
           <img src="../../static/image/logo.png">
         </a>
-        <div class="search">
+        <div class="search" @click="toSearch">
           <i class="iconfont icon-search"></i>
           <span class="text">搜索商品, 共33483款好物</span>
         </div>
-        <div class="login">登陆</div>
+        <div class="login" v-if="!userInfo.name" @click="toLogin">登陆</div>
       </div>
       <div class="nav">
         <div class="navItem active">推荐</div>
@@ -35,17 +35,24 @@ export default {
   },
   data() {
     return {
-
+      userInfo:{}
     };
   },
   mounted() {
-
+    const userInfo = localStorage.getItem('userInfo')
+    if(userInfo){
+      this.userInfo = JSON.parse(userInfo)
+    }
   },
   methods: {
     toSearch(){
       this.$router.push({path:'/search'})
+    },
+    toLogin(){
+      this.$router.push({path:'/login'})
     }
   },
+  
 };
 </script>
 

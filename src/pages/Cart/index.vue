@@ -7,10 +7,9 @@
     <span>满99元免邮费</span>
   </div>
   <div class="contentContainer">
-    <!-- <image class="cartImg" src="http://yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/noCart-d6193bd6e4.png?imageView&type=webp" mode=""></image> -->
     <img class="cartImg" src="http://yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/noCart-d6193bd6e4.png?imageView&type=webp" alt="">
-      <button>登录</button>
-    <!-- <div class="addMore">去添加点什么吧</div> -->
+      <button v-if="!userInfo.name" @click="toLogin">登录</button>
+    <div v-else class="addMore">去添加点什么吧</div>
   </div>
 </div>
   
@@ -21,8 +20,19 @@ export default {
   name:"Cart",
   data() {
     return {
-
+      userInfo:{}
     };
+  },
+  mounted() {
+    const userInfo = localStorage.getItem('userInfo')
+    if(userInfo){
+      this.userInfo = JSON.parse(userInfo)
+    }
+  },
+  methods: {
+    toLogin(){
+      this.$router.push({path:'/login'})
+    }
   },
 };
 </script>
