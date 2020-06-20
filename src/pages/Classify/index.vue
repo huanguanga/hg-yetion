@@ -94,7 +94,7 @@ export default {
       display flex
       box-sizing border-box
       border-top 2px solid #eee
-      padding-bottom 250px
+      padding-bottom 300px
       .Nav
         width 162px
         font-size 26px

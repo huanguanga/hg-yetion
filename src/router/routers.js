@@ -1,5 +1,5 @@
 import Buy from "@/pages/Buy"
-import Cart from "@/pages/Cart"
+import Cart from "@/pages/Cart/index"
 import Classify from "@/pages/Classify"
 import Home from "@/pages/Home"
 import Personal from "@/pages/Personal"
