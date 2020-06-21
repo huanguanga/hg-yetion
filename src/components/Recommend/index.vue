@@ -14,7 +14,7 @@
     <!-- 小标签 -->
     <div class="servicePolicyList">
       <div class="servicePolicyItem" v-for="(item, index) in indexData.policyDescList" :key="index">
-        <img :src="item.icon">
+        <img v-lazy="item.icon">
         <span>{{item.desc}}</span>
       </div>
     </div>
@@ -23,7 +23,7 @@
       <!-- 内容区导航 -->
       <div class="kingKongNav" v-if="indexData.kingKongModule">
         <div class="kingKongItem" v-for="(item, index) in indexData.kingKongModule.kingKongList" :key="index">
-          <img :src="item.picUrl" alt="">
+          <img v-lazy="item.picUrl" alt="">
           <span>{{item.text}}</span>
         </div>
       </div>
@@ -34,13 +34,13 @@
           <div class="line1" >
             <div class="item1" v-for="(item, index) in ranking1" :key="index">
               <span>{{item.categoryName}}</span>
-              <img :src="item.picUrl" alt="">
+              <img v-lazy="item.picUrl" alt="">
             </div>
           </div>
           <div class="line2">
             <div class="item2" v-for="(item, index) in ranking2" :key="index">
               <span>{{item.categoryName}}</span>
-              <img :src="item.picUrl" alt="">
+              <img v-lazy="item.picUrl" alt="">
             </div>
           </div>
         </div>
@@ -51,9 +51,9 @@
           <span>限时购</span>
           <span>更多></span>
         </div>
-        <div class="content">
+        <div class="content" v-if="indexData.flashSaleModule">
           <div class="flashSaleItem" v-for="(item) in indexData.flashSaleModule.itemList" :key="item.itemId">
-            <img :src="item.picUrl" alt="">
+            <img v-lazy="item.picUrl" alt="">
             <div>
               <span class="currentPrice">￥{{item.activityPrice}}</span>
               <span class="originalPrice">￥{{item.originPrice}}</span>
@@ -69,7 +69,7 @@
         </div>
         <div class="content">
           <div class="newShopItem" v-for="(item) in indexData.newItemList" :key="item.id">
-            <img :src="item.showPicUrl" alt="">
+            <img v-lazy="item.showPicUrl" alt="">
             <span class="name">{{item.name}}</span>
             <span class="price">￥{{item.retailPrice}}</span>
             <span class="tagWraper">{{item.itemTagList[0].name}}</span>
@@ -118,7 +118,9 @@ export default {
         speed:1000,
         // delay:1000
       },
-      gotop:false
+      gotop:false,
+      ranking1:[],
+      ranking2:[]
     };
   },
   mounted() {
@@ -148,11 +150,17 @@ export default {
     ...mapState({
       indexData: state=>state.homeData.indexData
     }),
-    ranking1(){
-      return this.indexData.categoryHotSellModule.categoryList.slice(0,2)
-    },
-    ranking2(){
-      return this.indexData.categoryHotSellModule.categoryList.slice(2)
+    // ranking1(){
+    //   return this.indexData.categoryHotSellModule.categoryList.slice(0,2)
+    // },
+    // ranking2(){
+    //   return this.indexData.categoryHotSellModule.categoryList.slice(2)
+    // }
+  },
+  watch: {
+    indexData(){
+      this.ranking1 = this.indexData.categoryHotSellModule.categoryList.slice(0,2)
+      this.ranking2 = this.indexData.categoryHotSellModule.categoryList.slice(2)
     }
   },
 };

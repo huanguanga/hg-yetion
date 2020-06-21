@@ -12,7 +12,7 @@
 			<div class="contentContainer">
         <img class="cartImg" src="http://yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/noCart-d6193bd6e4.png?imagediv&type=webp" alt="">
 				<button @click="toLogin">登录</button>
-				<div class="addMore">去添加点什么吧</div>
+				<!-- <div class="addMore">去添加点什么吧</div> -->
 			</div>
 		</div>
 		
